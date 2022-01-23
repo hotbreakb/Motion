@@ -116,7 +116,6 @@ ul li button {
 }
 .memo-container .memo {
   width: 80vw;
-  height: 30%;
   display: flex;
   flex-direction: row;
   line-height: 2.2rem;
@@ -132,6 +131,9 @@ ul li button {
 }
 .memo-container .memo:hover {
   background-color: #faf1e6;
+}
+.memo-container .memo.dragging {
+  opacity: 0.8;
 }
 .memo-container .memo .delete-memo {
   position: relative;
