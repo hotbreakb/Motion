@@ -1,18 +1,16 @@
 "use strict";
-// type text = string;
-// type img = string;
-// type video = string;
-// type todo = string;
 /*
 *
 * Vairables
 *
 */
+const IMG_EXTENSION = ['jpg', 'jpeg', 'gif', 'png', 'tif', 'tiff', 'raw', 'bmp', 'rle', 'dib', 'heic'];
+const VIDEO_EXTENSTION = ['avi', 'mp4', 'mkv', 'wmv', 'mov', 'flv'];
 const modal = document === null || document === void 0 ? void 0 : document.querySelector('.modal');
 const modalCloseBtn = modal === null || modal === void 0 ? void 0 : modal.querySelector('.close');
 const memoContainer = document.querySelector('.memo-container');
 const memos = document.querySelectorAll('.memo');
-let userSelection = 0;
+let userSelection;
 /*
 *
 * Modal
@@ -37,13 +35,13 @@ let showModal = (memoType) => {
     </div>`;
         userSelection = memoType;
         switch (memoType) {
-            case 0:
-            case 3: {
+            case 'text':
+            case 'todo': {
                 innerModal.innerHTML = modalTitle + modalDescription + btns;
                 break;
             }
-            case 1:
-            case 2: {
+            case 'img':
+            case 'video': {
                 innerModal.innerHTML = modalTitle + modalDescription + url + btns;
                 break;
             }
@@ -62,35 +60,46 @@ let closeModal = () => {
         modal.classList.remove('show');
 };
 let writeMemo = () => {
-    let checkValidImg = (url) => {
+    let checkValidURL = (urlType, url) => {
         const splitededArr = url.split('.');
         const extension = splitededArr[splitededArr.length - 1].toLowerCase();
-        const IMG_EXTENSION = ['jpg', 'jpeg', 'gif', 'png', 'tif', 'tiff', 'raw', 'bmp', 'rle', 'dib', 'heic'];
-        if (!IMG_EXTENSION.includes(extension)) {
-            alert("이미지 확장자가 아닙니다. 확장자를 확인해 주세요.");
-            return false;
+        if (urlType === "img") {
+            if (!IMG_EXTENSION.includes(extension)) {
+                alert("이미지가 아닙니다. 확장자를 확인해 주세요.");
+                return false;
+            }
+        }
+        else if (urlType === "video") {
+            if (!VIDEO_EXTENSTION.includes(extension) || !url.includes("youtube")) {
+                alert("영상이 아닙니다. 확장자를 확인해 주세요.");
+                return false;
+            }
+        }
+        else {
+            throw new Error("표기할 수 없는 확장자입니다.");
         }
         return true;
     };
+    let makeAddedMemo = () => { };
     const memoTitle = document.getElementById('memo-title');
     const content = document.getElementById('content');
     const url = document.getElementById('url');
     let addedMemo = document.createElement('addedMemo');
     switch (userSelection) {
-        case 0: {
+        case 'text': {
             addedMemo.innerHTML = `<div class="memo" draggable="true" alt="text">
-    <img class="delete-memo"></img>
-    <div class="title-content">
-        <h5>Title</h5>
-        <h6 class="memo-title">${memoTitle.value}</span>
-            <h5>Content</h5>
-            <span class="content">${content === null || content === void 0 ? void 0 : content.value}</span>
-    </div>
-</div>`;
+            <img class="delete-memo"></img>
+            <div class="title-content">
+                <h5>Title</h5>
+                <h6 class="memo-title">${memoTitle.value}</span>
+                    <h5>Content</h5>
+                    <span class="content">${content === null || content === void 0 ? void 0 : content.value}</span>
+            </div>
+        </div>`;
             break;
         }
-        case 1: {
-            if (!checkValidImg(url.value))
+        case 'img': {
+            if (!checkValidURL('img', url.value))
                 return;
             addedMemo.innerHTML = `<div class="memo" draggable="true" alt="img">
             <img class="delete-memo"></img>
@@ -104,10 +113,10 @@ let writeMemo = () => {
         </div>`;
             break;
         }
-        case 2: {
+        case 'video': {
             break;
         }
-        case 3: {
+        case 'todo': {
             break;
         }
     }

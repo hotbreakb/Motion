@@ -1,28 +1,21 @@
-// type text = string;
-// type img = string;
-// type video = string;
-// type todo = string;
-
-// type memoType = text | img | video | todo;
-
-type memo = {
-    title: string;
-    content: string;
-    imgURL?: string;
-    videoURL?: string;
-}
-
 /*
 *
 * Vairables
 *
 */
+
+const IMG_EXTENSION: string[] = ['jpg', 'jpeg', 'gif', 'png', 'tif', 'tiff', 'raw', 'bmp', 'rle', 'dib', 'heic'];
+const VIDEO_EXTENSTION: string[] = ['avi', 'mp4', 'mkv', 'wmv', 'mov', 'flv'];
+
+type memoType = 'text' | 'img' | 'video' | 'todo';
+type urlType = 'img' | 'video';
+
 const modal = document?.querySelector('.modal');
 const modalCloseBtn = modal?.querySelector('.close');
 const memoContainer = document.querySelector('.memo-container');
 const memos = document.querySelectorAll('.memo');
 
-let userSelection = 0;
+let userSelection: memoType;
 /*
 *
 * Modal
@@ -33,8 +26,8 @@ window.addEventListener("keydown", (key) => {
     if (key.code === "Escape") closeModal();
 });
 
-let showModal = (memoType: number) => {
-    let creatModal = (memoType: number) => {
+let showModal = (memoType: memoType) => {
+    let creatModal = (memoType: memoType) => {
         const innerModal = document?.querySelector('.inner-modal') as HTMLElement;
 
         const modalTitle = `<span class="memo-title">Title👑</span>
@@ -54,14 +47,14 @@ let showModal = (memoType: number) => {
         userSelection = memoType;
 
         switch (memoType) {
-            case 0:
-            case 3: {
+            case 'text':
+            case 'todo': {
                 innerModal.innerHTML = modalTitle + modalDescription + btns;
                 break;
             }
 
-            case 1:
-            case 2: {
+            case 'img':
+            case 'video': {
                 innerModal.innerHTML = modalTitle + modalDescription + url + btns;
                 break;
             }
@@ -71,7 +64,6 @@ let showModal = (memoType: number) => {
             }
         }
     }
-
 
     if (modal != null) {
         creatModal(memoType);
@@ -84,17 +76,30 @@ let closeModal = () => {
 }
 
 let writeMemo = () => {
-    let checkValidImg = (url: string): boolean => {
+    let checkValidURL = (urlType: urlType, url: string): boolean => {
         const splitededArr: string[] = url.split('.');
         const extension = splitededArr[splitededArr.length - 1].toLowerCase();
-        const IMG_EXTENSION: string[] = ['jpg', 'jpeg', 'gif', 'png', 'tif', 'tiff', 'raw', 'bmp', 'rle', 'dib', 'heic'];
 
-        if (!IMG_EXTENSION.includes(extension)) {
-            alert("이미지 확장자가 아닙니다. 확장자를 확인해 주세요.");
-            return false;
+        if (urlType === "img") {
+            if (!IMG_EXTENSION.includes(extension)) {
+                alert("이미지가 아닙니다. 확장자를 확인해 주세요.");
+                return false;
+            }
+        } else if (urlType === "video") {
+            if (!VIDEO_EXTENSTION.includes(extension) || !url.includes("youtube")) {
+                alert("영상이 아닙니다. 확장자를 확인해 주세요.");
+                return false;
+            }
+        } else {
+            throw new Error("표기할 수 없는 확장자입니다.");
         }
+
         return true;
     }
+
+    let makeAddedMemo = () => { };
+
+
     const memoTitle = document.getElementById('memo-title') as HTMLInputElement;
     const content = document.getElementById('content') as HTMLInputElement;
     const url = document.getElementById('url') as HTMLInputElement;
@@ -102,21 +107,21 @@ let writeMemo = () => {
 
 
     switch (userSelection) {
-        case 0: {
+        case 'text': {
             addedMemo.innerHTML = `<div class="memo" draggable="true" alt="text">
-    <img class="delete-memo"></img>
-    <div class="title-content">
-        <h5>Title</h5>
-        <h6 class="memo-title">${memoTitle.value}</span>
-            <h5>Content</h5>
-            <span class="content">${content?.value}</span>
-    </div>
-</div>`;
+            <img class="delete-memo"></img>
+            <div class="title-content">
+                <h5>Title</h5>
+                <h6 class="memo-title">${memoTitle.value}</span>
+                    <h5>Content</h5>
+                    <span class="content">${content?.value}</span>
+            </div>
+        </div>`;
             break;
         }
 
-        case 1: {
-            if (!checkValidImg(url.value)) return;
+        case 'img': {
+            if (!checkValidURL('img', url.value)) return;
 
             addedMemo.innerHTML = `<div class="memo" draggable="true" alt="img">
             <img class="delete-memo"></img>
@@ -130,10 +135,10 @@ let writeMemo = () => {
         </div>`;
             break;
         }
-        case 2: {
+        case 'video': {
             break;
         }
-        case 3: {
+        case 'todo': {
             break;
         }
 
