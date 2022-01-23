@@ -21,6 +21,15 @@ window.addEventListener("keydown", (key) => {
     if (key.code === "Escape")
         closeModal();
 });
+let addEventListenerToDeleteBtn = (deleteBtn) => {
+    deleteBtn.addEventListener('click', () => {
+        if (confirm('메모를 삭제할까요?')) {
+            const deletedMemo = deleteBtn.closest('.memo');
+            deletedMemo === null || deletedMemo === void 0 ? void 0 : deletedMemo.remove();
+        }
+        ;
+    });
+};
 let showModal = (memoType) => {
     let creatModal = (memoType) => {
         const innerModal = document === null || document === void 0 ? void 0 : document.querySelector('.inner-modal');
@@ -116,7 +125,10 @@ let writeMemo = () => {
     };
     let makeAddedMemo = () => {
         let addedByMemoType = ``;
-        const enableEnterContent = content.value.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+        let enableEnterContent = content.value;
+        let deleteBtn = document.createElement('deleteBtn');
+        deleteBtn.innerHTML = `<img class="delete-memo"></img>`;
+        addEventListenerToDeleteBtn(deleteBtn.children[0]);
         switch (userSelection) {
             case 'img': {
                 addedByMemoType = `<img class="memo-img" src="${url.value}"></img>`;
@@ -126,9 +138,13 @@ let writeMemo = () => {
                 addedByMemoType = `<iframe class="memo-video"  allow="fullscreen;" src="${url.value}"></iframe>`;
                 break;
             }
+            case 'todo': {
+                enableEnterContent = `🟣 ` + enableEnterContent.replace(/(?:\r\n|\r|\n)/g, '<br/>🟣 ');
+            }
         }
-        let addedMemo = `<div class="memo" draggable="true" alt="text">
-        <img class="delete-memo"></img>
+        //계속 여기서 막히네
+        return `<div class="memo" draggable="true" alt="text">
+        ${deleteBtn.innerHTML}
         ${addedByMemoType}
         <div class="title-content">
             <h5>Title</h5>
@@ -137,7 +153,6 @@ let writeMemo = () => {
                 <span class="content">${enableEnterContent}</span>
         </div>
     </div>`;
-        return addedMemo;
     };
     /* Run🔥 */
     if (IsInputNull())
@@ -160,32 +175,33 @@ let writeMemo = () => {
     }
     alert("기록되었습니다🧚‍♀️");
     addedMemo.innerHTML = makeAddedMemo();
-    memoContainer === null || memoContainer === void 0 ? void 0 : memoContainer.appendChild(addedMemo);
+    if (addedMemo.children[0]) {
+        addEventListerToNewMemo(addedMemo.children[0]);
+        memoContainer === null || memoContainer === void 0 ? void 0 : memoContainer.appendChild(addedMemo.children[0]);
+    }
+    ;
     memoTitle.value = "";
     content.value = "";
     closeModal();
 };
 deleteBtns.forEach((deleteBtn) => {
-    deleteBtn.addEventListener('click', () => {
-        if (confirm('메모를 삭제할까요?')) {
-            const deletedMemo = deleteBtn.closest('.memo');
-            deletedMemo === null || deletedMemo === void 0 ? void 0 : deletedMemo.remove();
-        }
-        ;
-    });
+    addEventListenerToDeleteBtn(deleteBtn);
 });
 /*
 *
 * Sortable memo
 *
 */
-memos.forEach(memo => {
+let addEventListerToNewMemo = (memo) => {
     memo.addEventListener('dragstart', () => {
         memo.classList.add('dragging');
     });
     memo.addEventListener('dragend', () => {
         memo.classList.remove('dragging');
     });
+};
+memos.forEach(memo => {
+    addEventListerToNewMemo(memo);
 });
 memoContainer === null || memoContainer === void 0 ? void 0 : memoContainer.addEventListener('dragover', (event) => {
     const mouseEvent = event;
