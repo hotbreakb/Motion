@@ -1,14 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="./build/main.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./build/main.js" defer></script>
+    <title>Motion</title>
 </head>
+
 <body>
-    
+    <h1 class="title">Motion</h1>
+    <h4 class="page-description">Take notes for you. It helps you refresh.</h4>
+
+    <ul>
+        <li><button id="text" onclick="showModal()">Text</button></li>
+        <li><button id="image">Image</button></li>
+        <li><button id="video">Video</button></li>
+        <li><button id="todo">To Do</button></li>
+    </ul>
+
+    <!-- 메모 영역 한 군데 -->
+
+
+    <div class="memo-container">
+        <div class="memo">
+            <img class="delete-memo"></img>
+            <div class="title-content">
+                <h5>Text</h5>
+                <h6 class="memo-title">text 메모 예시</span>
+                    <h5>Content</h5>
+                    <span class="content">이것은 텍스트 텍ㅔ테겥ㄱ</span>
+            </div>
+        </div>
+
+        <div class="memo">
+            <img class="delete-memo"></img>
+            <img class="memo-img" src="img/hotbreakb.jpg"></img>
+            <div class="title-content">
+                <h5>Text</h5>
+                <h6 class="memo-title">img 메모 예시</span>
+                    <h5>Content</h5>
+                    <span class="content">이것은 텍스트 텍ㅔ테겥ㄱ</span>
+            </div>
+        </div>
+
+        <div class="memo">
+            <img class="delete-memo"></img>
+            <iframe class="memo-video" width="500" height="320" src="https://www.youtube.com/embed/TTLHd3IyErM">
+            </iframe>
+            <div class="title-content">
+                <h5>Text</h5>
+                <h6 class="memo-title">video 메모 예시</span>
+                    <h5>Content</h5>
+                    <span class="content">이것은 텍스트 텍ㅔ테겥ㄱ</span>
+            </div>
+        </div>
+
+        <div class="memo">
+            <img class="delete-memo"></img>
+            </iframe>
+            <div class="title-content">
+                <h5>Text</h5>
+                <h6 class="memo-title">todo 메모 예시</span>
+                    <h5>Content</h5>
+                    <span class="content">이것은 텍스트 텍ㅔ테겥ㄱ</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal">
+        <div class="inner-modal">
+            <span class="title">Title</span>
+            <input type="text" class="memo-title">
+            <span class="content-name">???</span>
+            <input type="text" class="content">
+            <div class="btns">
+                <button class="write" onclick="writeMemo()">write</button>
+                <button class="close" onclick="closeModal()">close</button>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
