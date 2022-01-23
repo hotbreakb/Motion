@@ -33,7 +33,8 @@ button {
   font-size: 1.2rem;
 }
 
-input {
+input,
+textarea {
   border: none;
 }
 
@@ -56,6 +57,7 @@ ul li button {
 .memo-title,
 .content-name {
   font-size: 1.5rem;
+  margin-top: 0.7rem;
 }
 
 .title {
@@ -77,21 +79,28 @@ ul li button {
   background: rgba(83, 83, 83, 0.5);
 }
 .modal .inner-modal {
-  position: relative;
+  position: absolute;
   background: #fdfaf6;
   border-radius: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  top: 40vh;
-  left: 25vw;
+  top: 35%;
+  left: 50%;
   width: 50vw;
+  max-width: 500px;
   height: 40vh;
   padding: 1rem;
+  transform: translate(-50%, -50%);
 }
 .modal .inner-modal input {
   width: 100%;
   height: 20%;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+}
+.modal .inner-modal textarea {
   border-radius: 10px;
   padding: 1rem;
   font-size: 1rem;

@@ -20,8 +20,6 @@ let userSelection;
 window.addEventListener("keydown", (key) => {
     if (key.code === "Escape")
         closeModal();
-    else if (key.code === "Enter")
-        writeMemo();
 });
 let showModal = (memoType) => {
     let creatModal = (memoType) => {
@@ -29,7 +27,7 @@ let showModal = (memoType) => {
         const modalTitle = `<span class="memo-title">Title👑</span>
         <input type="text" id="memo-title">`;
         const modalDescription = `<span class="content-name">Content</span>
-        <input type="text" id="content">`;
+        <textarea name="" id="content" cols="30" rows="10"></textarea>`;
         const url = `<span class="url">URL</span>
         <input type="text" id="url">`;
         const btns = `<div class="btns">
@@ -118,6 +116,7 @@ let writeMemo = () => {
     };
     let makeAddedMemo = () => {
         let addedByMemoType = ``;
+        const enableEnterContent = content.value.replace(/(?:\r\n|\r|\n)/g, '<br/>');
         switch (userSelection) {
             case 'img': {
                 addedByMemoType = `<img class="memo-img" src="${url.value}"></img>`;
@@ -135,7 +134,7 @@ let writeMemo = () => {
             <h5>Title</h5>
             <h6 class="memo-title">${memoTitle.value}</span>
                 <h5>Content</h5>
-                <span class="content">${content === null || content === void 0 ? void 0 : content.value}</span>
+                <span class="content">${enableEnterContent}</span>
         </div>
     </div>`;
         return addedMemo;
@@ -159,6 +158,7 @@ let writeMemo = () => {
             break;
         }
     }
+    alert("기록되었습니다🧚‍♀️");
     addedMemo.innerHTML = makeAddedMemo();
     memoContainer === null || memoContainer === void 0 ? void 0 : memoContainer.appendChild(addedMemo);
     memoTitle.value = "";
