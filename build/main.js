@@ -72,21 +72,22 @@ let writeMemo = () => {
     let IsInputNull = () => {
         if (!memoTitle.value) {
             alert('🙅 제목을 입력해 주세요');
-            return false;
+            return true;
         }
         if (!content.value) {
             alert('🙅 설명을 입력해 주세요');
-            return false;
+            return true;
         }
         switch (userSelection) {
             case 'img':
             case 'video': {
-                if (!url.value)
+                if (!url.value) {
                     alert('🙅 URL을 입력해 주세요');
-                return false;
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
     };
     let checkValidURL = (urlType, url) => {
         const splitededArr = url.split('.');
@@ -107,6 +108,13 @@ let writeMemo = () => {
             throw new Error("표기할 수 없는 확장자입니다.");
         }
         return true;
+    };
+    let makeYoutubeURL = () => {
+        if (!url.value.includes('embed')) {
+            const youtubeURL = url.value.split('=');
+            const youtubeUrlID = youtubeURL[youtubeURL.length - 1];
+            return `https://www.youtube.com/embed/` + youtubeUrlID;
+        }
     };
     let makeAddedMemo = () => {
         let addedByMemoType = ``;
@@ -133,17 +141,21 @@ let writeMemo = () => {
         return addedMemo;
     };
     /* Run🔥 */
-    if (!IsInputNull())
+    if (IsInputNull())
         return;
     switch (userSelection) {
         case 'img': {
             if (!checkValidURL('img', url.value))
                 return;
+            if (url.value.includes('youtube'))
+                makeYoutubeURL();
             break;
         }
         case 'video': {
             if (!checkValidURL('video', url.value))
                 return;
+            if (url.value.includes('youtube'))
+                makeYoutubeURL();
             break;
         }
     }

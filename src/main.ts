@@ -78,6 +78,7 @@ let closeModal = () => {
 }
 
 let writeMemo = (): void => {
+
     /* Variables */
     const memoTitle = document.getElementById('memo-title') as HTMLInputElement;
     const content = document.getElementById('content') as HTMLInputElement;
@@ -89,22 +90,24 @@ let writeMemo = (): void => {
     let IsInputNull = (): boolean => {
         if (!memoTitle.value) {
             alert('🙅 제목을 입력해 주세요');
-            return false;
+            return true;
         }
 
         if (!content.value) {
             alert('🙅 설명을 입력해 주세요');
-            return false;
+            return true;
         }
 
         switch (userSelection) {
             case 'img':
             case 'video': {
-                if (!url.value) alert('🙅 URL을 입력해 주세요');
-                return false;
+                if (!url.value) {
+                    alert('🙅 URL을 입력해 주세요');
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
     }
 
 
@@ -128,6 +131,14 @@ let writeMemo = (): void => {
 
         return true;
     }
+
+    let makeYoutubeURL = (): string | void => {
+        if (!url.value.includes('embed')) {
+            const youtubeURL: string[] = url.value.split('=');
+            const youtubeUrlID = youtubeURL[youtubeURL.length - 1];
+            return `https://www.youtube.com/embed/` + youtubeUrlID;
+        }
+    };
 
     let makeAddedMemo = (): string => {
         let addedByMemoType = ``;
@@ -158,15 +169,17 @@ let writeMemo = (): void => {
     };
 
     /* Run🔥 */
-    if (!IsInputNull()) return;
+    if (IsInputNull()) return;
 
     switch (userSelection) {
         case 'img': {
             if (!checkValidURL('img', url.value)) return;
+            if (url.value.includes('youtube')) makeYoutubeURL();
             break;
         }
         case 'video': {
             if (!checkValidURL('video', url.value)) return;
+            if (url.value.includes('youtube')) makeYoutubeURL();
             break;
         }
     }
