@@ -57,7 +57,6 @@ ul li button {
 .memo-title,
 .content-name {
   font-size: 1.5rem;
-  margin: 1rem;
 }
 
 .page-description {
@@ -111,7 +110,6 @@ ul li button {
 
 .memo-container {
   font-family: "Arita-dotum-Medium";
-  height: 100%;
   margin-bottom: 10%;
 }
 .memo-container .memo {

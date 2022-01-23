@@ -68,7 +68,6 @@ ul {
 .memo-title,
 .content-name {
   font-size: 1.5rem;
-  margin: 1rem;
 }
 
 .page-description {
@@ -128,12 +127,10 @@ ul {
 
 .memo-container {
   font-family: "Arita-dotum-Medium";
-  height: 100%;
   margin-bottom: 10%;
 
   .memo {
     width: 80vw;
-    // height: 35vh;
     display: flex;
     flex-direction: row;
     line-height: 2.2rem;
