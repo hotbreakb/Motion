@@ -39,9 +39,17 @@ input {
 ul {
   list-style-type: none;
   display: flex;
+  margin-top: 1rem;
 }
 ul li {
   padding: 1rem;
+}
+ul li button {
+  background-color: #ff6464;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .title,

@@ -48,9 +48,18 @@ input {
 ul {
   list-style-type: none;
   display: flex;
+  margin-top: 1rem;
 
   li {
     padding: 1rem;
+
+    button {
+      background-color: #ff6464;
+      color: #ffffff;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   }
 }
 
@@ -134,8 +143,8 @@ ul {
     //   content: "";
     //   position: absolute;
     //   // z-index: -1;
-    //   width: 100%;
-    //   height: 100%;
+    //   width: 80vw;
+    //   height: 30%;
     //   opacity: 0;
     //   border-radius: 30px;
     //   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
