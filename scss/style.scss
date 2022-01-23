@@ -45,6 +45,7 @@ button {
 input,
 textarea {
   border: none;
+  resize: none;
 }
 
 ul {
@@ -66,7 +67,8 @@ ul {
 }
 
 .memo-title,
-.content-name {
+.content-name,
+.url {
   font-size: 1.5rem;
   margin-top: 0.7rem;
 }
@@ -101,7 +103,7 @@ ul {
     width: 50vw;
     max-width: 500px;
     height: 40vh;
-    padding: 1rem;
+    padding: 1.5rem 1.5rem 0.2rem 1.5rem;
     transform: translate(-50%, -50%);
 
     input {
@@ -141,7 +143,7 @@ ul {
 
 .memo-container {
   font-family: "Arita-dotum-Medium";
-  margin-bottom: 10%;
+  margin-bottom: 5%;
 
   .memo {
     width: 80vw;
