@@ -167,7 +167,11 @@ let writeMemo = () => {
 };
 deleteBtns.forEach((deleteBtn) => {
     deleteBtn.addEventListener('click', () => {
-        confirm('메모를 삭제할까요?');
+        if (confirm('메모를 삭제할까요?')) {
+            const deletedMemo = deleteBtn.closest('.memo');
+            deletedMemo === null || deletedMemo === void 0 ? void 0 : deletedMemo.remove();
+        }
+        ;
     });
 });
 /*
