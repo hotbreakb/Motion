@@ -23,9 +23,11 @@ $lightYello2: #faf1e6;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  white-space: pre;
 }
 
 body {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -63,7 +65,7 @@ ul {
   }
 }
 
-.title,
+.memo-title,
 .content-name {
   font-size: 1.5rem;
   margin: 1rem;
@@ -71,14 +73,15 @@ ul {
 
 .page-description {
   font-size: 1.5rem;
+  margin: 0.3rem;
 }
 
 .modal {
   font-family: "Arita-dotum-Medium";
   display: none;
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: rgba($color: #535353, $alpha: 0.5);
 
   .inner-modal {
@@ -91,13 +94,15 @@ ul {
     top: 40vh;
     left: 25vw;
     width: 50vw;
-    height: 30vh;
+    height: 40vh;
     padding: 1rem;
 
     input {
       width: 100%;
       height: 20%;
       border-radius: 10px;
+      padding: 1rem;
+      font-size: 1rem;
     }
 
     .btns {
@@ -205,6 +210,10 @@ ul {
 }
 
 @media screen and (max-width: 768px) {
+  .page-description {
+    font-size: 1.1rem;
+  }
+
   .memo-container {
     .memo {
       flex-direction: column;
