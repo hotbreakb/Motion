@@ -140,6 +140,7 @@ ul li button {
   width: 1.5rem;
   height: 1.5rem;
   content: url("../img/close.png");
+  cursor: pointer;
 }
 .memo-container .memo .memo-img {
   height: 20vh;

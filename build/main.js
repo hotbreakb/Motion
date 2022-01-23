@@ -10,6 +10,7 @@ const modal = document === null || document === void 0 ? void 0 : document.query
 const modalCloseBtn = modal === null || modal === void 0 ? void 0 : modal.querySelector('.close');
 const memoContainer = document.querySelector('.memo-container');
 const memos = document.querySelectorAll('.memo');
+const deleteBtns = document.querySelectorAll('.delete-memo');
 let userSelection;
 /*
 *
@@ -126,6 +127,11 @@ let writeMemo = () => {
     content.value = "";
     closeModal();
 };
+deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener('click', () => {
+        confirm('메모를 삭제할까요?');
+    });
+});
 /*
 *
 * Sortable memo
