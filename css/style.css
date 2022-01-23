@@ -17,8 +17,8 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,6 +32,10 @@ button {
   font-size: 1.2rem;
 }
 
+input {
+  border: none;
+}
+
 ul {
   list-style-type: none;
   display: flex;
@@ -42,8 +46,7 @@ ul li {
 
 .title,
 .content-name {
-  font-family: "Hahmlet-Bold";
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 1rem;
 }
 
@@ -52,39 +55,53 @@ ul li {
 }
 
 .modal {
+  font-family: "Arita-dotum-Medium";
   display: none;
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background: rgba(255, 254, 213, 0.5);
+  background: rgba(83, 83, 83, 0.5);
 }
 .modal .inner-modal {
   position: relative;
-  background: #fafafa;
+  background: #fdfaf6;
   border-radius: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   top: 40vh;
   left: 25vw;
   width: 50vw;
   height: 30vh;
+  padding: 1rem;
+}
+.modal .inner-modal input {
+  width: 100%;
+  height: 20%;
+  border-radius: 10px;
 }
 .modal .inner-modal .btns {
   display: flex;
   justify-content: center;
+  padding: 2%;
 }
 .modal .inner-modal .btns button {
   padding: 1rem;
+  border-radius: 20px;
+}
+.modal .inner-modal .btns button:hover {
+  background-color: #faf1e6;
 }
 .modal.show {
   display: block;
 }
 
 .memo-container {
+  font-family: "Arita-dotum-Medium";
   height: 100%;
+  margin-bottom: 10%;
 }
 .memo-container .memo {
-  font-family: "Arita-dotum-Medium";
   width: 80vw;
   height: 30%;
   display: flex;
@@ -112,12 +129,11 @@ ul li {
   content: url("../img/close.png");
 }
 .memo-container .memo .memo-img {
-  height: 100%;
+  height: 20vh;
   margin: 0 1.5rem 0 0;
 }
 .memo-container .memo .memo-video {
   width: 50%;
-  height: 100%;
   margin: 0 1.5rem 0 0;
 }
 .memo-container .memo .title-content {
@@ -139,6 +155,21 @@ ul li {
 .memo-container .memo .title-content span {
   font-size: 1rem;
   margin-left: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .memo-container .memo {
+    flex-direction: column;
+  }
+  .memo-container .memo .memo-img {
+    width: 50%;
+  }
+  .memo-container .memo .memo-video {
+    width: 92%;
+    height: 20vh;
+    object-fit: contain;
+    margin-top: 1rem;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
