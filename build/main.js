@@ -20,6 +20,8 @@ let userSelection;
 window.addEventListener("keydown", (key) => {
     if (key.code === "Escape")
         closeModal();
+    else if (key.code === "Enter")
+        writeMemo();
 });
 let showModal = (memoType) => {
     let creatModal = (memoType) => {
@@ -61,10 +63,31 @@ let closeModal = () => {
         modal.classList.remove('show');
 };
 let writeMemo = () => {
+    /* Variables */
     const memoTitle = document.getElementById('memo-title');
     const content = document.getElementById('content');
     const url = document.getElementById('url');
     let addedMemo = document.createElement('addedMemo');
+    /* Functions */
+    let IsInputNull = () => {
+        if (!memoTitle.value) {
+            alert('🙅 제목을 입력해 주세요');
+            return false;
+        }
+        if (!content.value) {
+            alert('🙅 설명을 입력해 주세요');
+            return false;
+        }
+        switch (userSelection) {
+            case 'img':
+            case 'video': {
+                if (!url.value)
+                    alert('🙅 URL을 입력해 주세요');
+                return false;
+            }
+        }
+        return true;
+    };
     let checkValidURL = (urlType, url) => {
         const splitededArr = url.split('.');
         const extension = splitededArr[splitededArr.length - 1].toLowerCase();
@@ -109,6 +132,9 @@ let writeMemo = () => {
     </div>`;
         return addedMemo;
     };
+    /* Run🔥 */
+    if (!IsInputNull())
+        return;
     switch (userSelection) {
         case 'img': {
             if (!checkValidURL('img', url.value))
