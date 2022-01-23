@@ -76,6 +76,12 @@ let closeModal = () => {
 }
 
 let writeMemo = () => {
+    const memoTitle = document.getElementById('memo-title') as HTMLInputElement;
+    const content = document.getElementById('content') as HTMLInputElement;
+    const url = document.getElementById('url') as HTMLInputElement;
+
+    let addedMemo = document.createElement('addedMemo');
+
     let checkValidURL = (urlType: urlType, url: string): boolean => {
         const splitededArr: string[] = url.split('.');
         const extension = splitededArr[splitededArr.length - 1].toLowerCase();
@@ -86,7 +92,7 @@ let writeMemo = () => {
                 return false;
             }
         } else if (urlType === "video") {
-            if (!VIDEO_EXTENSTION.includes(extension) || !url.includes("youtube")) {
+            if (!VIDEO_EXTENSTION.includes(extension) && !url.includes("youtube")) {
                 alert("영상이 아닙니다. 확장자를 확인해 주세요.");
                 return false;
             }
@@ -97,54 +103,46 @@ let writeMemo = () => {
         return true;
     }
 
-    let makeAddedMemo = () => { };
+    let makeAddedMemo = (): string => {
+        let addedByMemoType = ``;
 
-
-    const memoTitle = document.getElementById('memo-title') as HTMLInputElement;
-    const content = document.getElementById('content') as HTMLInputElement;
-    const url = document.getElementById('url') as HTMLInputElement;
-    let addedMemo = document.createElement('addedMemo');
-
-
-    switch (userSelection) {
-        case 'text': {
-            addedMemo.innerHTML = `<div class="memo" draggable="true" alt="text">
-            <img class="delete-memo"></img>
-            <div class="title-content">
-                <h5>Title</h5>
-                <h6 class="memo-title">${memoTitle.value}</span>
-                    <h5>Content</h5>
-                    <span class="content">${content?.value}</span>
-            </div>
-        </div>`;
-            break;
+        switch (userSelection) {
+            case 'img': {
+                addedByMemoType = `<img class="memo-img" src="${url.value}"></img>`;
+                break;
+            }
+            case 'video': {
+                addedByMemoType = `<iframe class="memo-video"  allow="fullscreen;" src="${url.value}"></iframe>`;
+                break;
+            }
         }
 
+        let addedMemo = `<div class="memo" draggable="true" alt="text">
+        <img class="delete-memo"></img>
+        ${addedByMemoType}
+        <div class="title-content">
+            <h5>Title</h5>
+            <h6 class="memo-title">${memoTitle.value}</span>
+                <h5>Content</h5>
+                <span class="content">${content?.value}</span>
+        </div>
+    </div>`;
+
+        return addedMemo;
+    };
+
+    switch (userSelection) {
         case 'img': {
             if (!checkValidURL('img', url.value)) return;
-
-            addedMemo.innerHTML = `<div class="memo" draggable="true" alt="img">
-            <img class="delete-memo"></img>
-            <img class="memo-img" src="${url.value}"></img>
-            <div class="title-content">
-                <h5>Title</h5>
-                <h6 class="memo-title">${memoTitle.value}</span>
-                    <h5>Content</h5>
-                    <span class="content">${content?.value}</span>
-            </div>
-        </div>`;
             break;
         }
         case 'video': {
+            if (!checkValidURL('video', url.value)) return;
             break;
         }
-        case 'todo': {
-            break;
-        }
-
     }
 
-
+    addedMemo.innerHTML = makeAddedMemo();
     memoContainer?.appendChild(addedMemo);
 
     memoTitle.value = "";
