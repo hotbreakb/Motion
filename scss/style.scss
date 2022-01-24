@@ -157,22 +157,6 @@ ul {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease-in-out;
 
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   // z-index: -1;
-    //   width: 80vw;
-    //   height: 30%;
-    //   opacity: 0;
-    //   border-radius: 30px;
-    //   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    //   transition: opacity 0.3s ease-in-out;
-    // }
-
-    &:hover::after {
-      opacity: 1;
-    }
-
     &:hover {
       background-color: $lightYello2;
     }
@@ -192,12 +176,13 @@ ul {
     }
 
     .memo-img {
-      height: 20vh;
+      width: 50%;
       margin: 0 1.5rem 0 0;
     }
 
     .memo-video {
       width: 50%;
+      height: 35vh;
       margin: 0 1.5rem 0 0;
     }
 
@@ -235,10 +220,6 @@ ul {
   .memo-container {
     .memo {
       flex-direction: column;
-
-      .memo-img {
-        width: 50%;
-      }
 
       .memo-video {
         width: 92%;

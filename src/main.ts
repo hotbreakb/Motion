@@ -18,25 +18,16 @@ const deleteBtns = document.querySelectorAll('.delete-memo');
 
 let userSelection: memoType;
 /*
-*
-* Modal
-*
-*/
+ * create Memo 
+ */
 
 window.addEventListener("keydown", (key) => {
     if (key.code === "Escape") closeModal();
 });
 
-let addEventListenerToDeleteBtn = (deleteBtn: Element) => {
-    deleteBtn.addEventListener('click', () => {
-        if (confirm('메모를 삭제할까요?')) {
-            const deletedMemo = deleteBtn.closest('.memo');
-            deletedMemo?.remove();
-        };
-    });
-};
-
+// creatModal -> show
 let showModal = (memoType: memoType) => {
+    // change modal content by memoType
     let creatModal = (memoType: memoType) => {
         const innerModal = document?.querySelector('.inner-modal') as HTMLElement;
 
@@ -75,17 +66,18 @@ let showModal = (memoType: memoType) => {
         }
     }
 
-    if (modal != null) {
+    if (modal) {
         creatModal(memoType);
         modal.classList.add('show');
     }
 }
 
 let closeModal = () => {
-    if (modal != null) modal.classList.remove('show');
+    if (modal) modal.classList.remove('show');
 }
 
-let writeMemo = (): void => {
+// make new memo element by user selection
+let writeMemo = () => {
 
     /* Variables */
     const memoTitle = document.getElementById('memo-title') as HTMLInputElement;
@@ -140,20 +132,18 @@ let writeMemo = (): void => {
         return true;
     }
 
-    let makeYoutubeURL = (): string | void => {
+    let makeYoutubeURL = (): string => {
         if (!url.value.includes('embed')) {
             const youtubeURL: string[] = url.value.split('=');
             const youtubeUrlID = youtubeURL[youtubeURL.length - 1];
             return `https://www.youtube.com/embed/` + youtubeUrlID;
         }
+        return url.value;
     };
 
     let makeAddedMemo = (): string => {
         let addedByMemoType = ``;
         let enableEnterContent = content.value;
-        let deleteBtn = document.createElement('deleteBtn');
-        deleteBtn.innerHTML = `<img class="delete-memo"></img>`;
-        addEventListenerToDeleteBtn(deleteBtn.children[0]);
 
         switch (userSelection) {
             case 'img': {
@@ -161,7 +151,9 @@ let writeMemo = (): void => {
                 break;
             }
             case 'video': {
-                addedByMemoType = `<iframe class="memo-video"  allow="fullscreen;" src="${url.value}"></iframe>`;
+                let urlContent = url.value;
+                if (url.value.includes('youtube')) urlContent = makeYoutubeURL();
+                addedByMemoType = `<iframe class="memo-video"  allow="fullscreen;" src="${urlContent}"></iframe>`;
                 break;
             }
             case 'todo': {
@@ -169,9 +161,8 @@ let writeMemo = (): void => {
             }
         }
 
-        //계속 여기서 막히네
         return `<div class="memo" draggable="true" alt="text">
-        ${deleteBtn.innerHTML}
+        <img class="delete-memo"></img>
         ${addedByMemoType}
         <div class="title-content">
             <h5>Title</h5>
@@ -188,12 +179,10 @@ let writeMemo = (): void => {
     switch (userSelection) {
         case 'img': {
             if (!checkValidURL('img', url.value)) return;
-            if (url.value.includes('youtube')) makeYoutubeURL();
             break;
         }
         case 'video': {
             if (!checkValidURL('video', url.value)) return;
-            if (url.value.includes('youtube')) makeYoutubeURL();
             break;
         }
     }
@@ -210,15 +199,18 @@ let writeMemo = (): void => {
     closeModal();
 }
 
-deleteBtns.forEach((deleteBtn) => {
-    addEventListenerToDeleteBtn(deleteBtn);
-});
-
+let addEventListenerToDeleteBtn = (deleteBtn: Element) => {
+    deleteBtn.addEventListener('click', () => {
+        if (confirm('메모를 삭제할까요?')) {
+            const deletedMemo = deleteBtn.closest('.memo');
+            deletedMemo?.remove();
+        };
+    });
+};
 /*
-*
-* Sortable memo
-*
+* addEventListner
 */
+
 let addEventListerToNewMemo = (memo: Element) => {
     memo.addEventListener('dragstart', () => {
         memo.classList.add('dragging');
@@ -227,11 +219,21 @@ let addEventListerToNewMemo = (memo: Element) => {
     memo.addEventListener('dragend', () => {
         memo.classList.remove('dragging');
     });
+
+    const deleteBtn = memo.querySelector('.delete-memo');
+    if (deleteBtn) addEventListenerToDeleteBtn(deleteBtn);
 }
 
 memos.forEach(memo => {
     addEventListerToNewMemo(memo);
 });
+
+deleteBtns.forEach((deleteBtn) => {
+    addEventListenerToDeleteBtn(deleteBtn);
+});
+/*
+ * Sortable 
+ */
 
 memoContainer?.addEventListener('dragover', (event) => {
     const mouseEvent = event as MouseEvent;
