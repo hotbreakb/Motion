@@ -1,9 +1,4 @@
 "use strict";
-/*
-*
-* Vairables
-*
-*/
 const IMG_EXTENSION = ['jpg', 'jpeg', 'gif', 'png', 'tif', 'tiff', 'raw', 'bmp', 'rle', 'dib', 'heic'];
 const VIDEO_EXTENSTION = ['avi', 'mp4', 'mkv', 'wmv', 'mov', 'flv'];
 const modal = document === null || document === void 0 ? void 0 : document.querySelector('.modal');
@@ -12,16 +7,11 @@ const memoContainer = document.querySelector('.memo-container');
 const memos = document.querySelectorAll('.memo');
 const deleteBtns = document.querySelectorAll('.delete-memo');
 let userSelection;
-/*
- * create Memo
- */
 window.addEventListener("keydown", (key) => {
     if (key.code === "Escape")
         closeModal();
 });
-// creatModal -> show
 let showModal = (memoType) => {
-    // change modal content by memoType
     let creatModal = (memoType) => {
         const innerModal = document === null || document === void 0 ? void 0 : document.querySelector('.inner-modal');
         const modalTitle = `<span class="memo-title">Title👑</span>
@@ -60,14 +50,11 @@ let closeModal = () => {
     if (modal)
         modal.classList.remove('show');
 };
-// make new memo element by user selection
 let writeMemo = () => {
-    /* Variables */
     const memoTitle = document.getElementById('memo-title');
     const content = document.getElementById('content');
     const url = document.getElementById('url');
     let addedMemo = document.createElement('addedMemo');
-    /* Functions */
     let IsInputNull = () => {
         if (!memoTitle.value) {
             alert('🙅 제목을 입력해 주세요');
@@ -146,7 +133,6 @@ let writeMemo = () => {
         </div>
     </div>`;
     };
-    /* Run🔥 */
     if (IsInputNull())
         return;
     switch (userSelection) {
@@ -181,9 +167,6 @@ let addEventListenerToDeleteBtn = (deleteBtn) => {
         ;
     });
 };
-/*
-* addEventListner
-*/
 let addEventListerToNewMemo = (memo) => {
     memo.addEventListener('dragstart', () => {
         memo.classList.add('dragging');
@@ -201,9 +184,6 @@ memos.forEach(memo => {
 deleteBtns.forEach((deleteBtn) => {
     addEventListenerToDeleteBtn(deleteBtn);
 });
-/*
- * Sortable
- */
 memoContainer === null || memoContainer === void 0 ? void 0 : memoContainer.addEventListener('dragover', (event) => {
     const mouseEvent = event;
     const dragging = memoContainer.querySelector('.dragging');
